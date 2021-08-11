@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_list.view.*
 class ListFragment : Fragment(), ListAdapter.OnUserClickListener {
 
     private val mUserViewModel: UserViewModel by viewModels()
-    val adapter = ListAdapter(this)
+    private val adapter = ListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,7 @@ class ListFragment : Fragment(), ListAdapter.OnUserClickListener {
 
     }
 
-    fun subscribeObservers() {
+    private fun subscribeObservers() {
         mUserViewModel.readAllData.observe(viewLifecycleOwner) {
             adapter.setNewList(it)
 

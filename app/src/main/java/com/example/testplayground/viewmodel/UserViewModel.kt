@@ -13,7 +13,7 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
     val readAllData: MutableLiveData<List<User>> = MutableLiveData()
 
-    fun getAllUser() {
+    private fun getAllUser() {
 
         viewModelScope.launch {
             val users = userRepository.fetchUserData()
