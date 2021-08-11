@@ -9,11 +9,11 @@ import com.example.testplayground.R
 import com.example.testplayground.model.User
 
 class ListAdapter(val onUserClickListener: OnUserClickListener? = null) :
-    RecyclerView.Adapter<ListAdapter.NoteHolder>() {
+    RecyclerView.Adapter<ListAdapter.UserHolder>() {
 
     val userList = mutableListOf<User>()
 
-    inner class NoteHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class UserHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
                 onUserClickListener?.onUserClick(adapterPosition)
@@ -22,13 +22,13 @@ class ListAdapter(val onUserClickListener: OnUserClickListener? = null) :
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false)
-        return NoteHolder(view)
+        return UserHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NoteHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserHolder, position: Int) {
         val user = userList[position]
 
         holder.itemView.findViewById<TextView>(R.id.user_Id).text = user.userId.toString()

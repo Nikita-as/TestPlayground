@@ -5,7 +5,7 @@ import com.example.testplayground.service.UserService
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val userService: UserService,
+    private val userService: UserService
 
     ) {
     suspend fun fetchUserData(): List<User> {
