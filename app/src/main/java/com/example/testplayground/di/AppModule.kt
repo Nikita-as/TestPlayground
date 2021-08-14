@@ -25,6 +25,7 @@ object AppModule {
             .build()
     }
 
+
     @Singleton
     @Provides
     fun provideUsersService(retrofit: Retrofit): UserService {
