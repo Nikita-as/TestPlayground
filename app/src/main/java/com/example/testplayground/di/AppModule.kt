@@ -1,6 +1,8 @@
 package com.example.testplayground.di
 
 
+import com.example.testplayground.local.PostsDao
+import com.example.testplayground.local.UserDao
 import com.example.testplayground.repository.UserDetailRepository
 import com.example.testplayground.repository.UserRepository
 import com.example.testplayground.service.UserDetailService
@@ -32,15 +34,15 @@ object AppModule {
         return retrofit.create(UserService::class.java)
     }
 
-
     @Singleton
     @Provides
     fun provideUserRepository(
-        userService: UserService
+        userService: UserService,
+        userDao: UserDao
     ): UserRepository {
         return UserRepository(
-            userService = userService
-
+            usersService = userService,
+            userDao = userDao
         )
     }
 
@@ -55,9 +57,11 @@ object AppModule {
     @Provides
     fun provideUserDetailRepository(
         userDetailService: UserDetailService,
+        postsDao: PostsDao
     ): UserDetailRepository {
         return UserDetailRepository(
-            userDetailService = userDetailService
+            userDetailService = userDetailService,
+            userPostsDao = postsDao
         )
     }
 }

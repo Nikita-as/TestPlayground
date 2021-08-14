@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testplayground.R
 import com.example.testplayground.viewmodel.UserDetailViewModel
@@ -20,24 +18,23 @@ class DetailFragment : Fragment() {
     private val viewModel: UserDetailViewModel by viewModels()
 
     private val adapter = PostsListAdapter()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey"){
-                key,bundle ->
-            val userId = bundle.getString("bundleKey")
-            viewModel.getUserPost(userId = userId.toString().toInt())
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
-
+    override fun onStart() {
+        super.onStart()
+        val bundle = arguments
+        val userId = bundle?.getInt("userId")
+        userId?.let {
+            viewModel.getPosts(userId, false)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -1,6 +1,6 @@
 package com.example.testplayground.local
 
-import androidx.lifecycle.LiveData
+
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,11 +11,14 @@ import com.example.testplayground.model.User
 interface UserDao {
 
     @Query("SELECT * FROM user_data")
-    fun getAllUsers(): LiveData<List<User>>
+    suspend fun getAllUsers(): List<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUsers(users: User)
+    suspend fun insertUser(user: User)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUsers(users: List<User>)
 
     @Query("DELETE FROM user_data")
-    fun deleteAllUsers()
+    suspend fun deleteAllUsers()
 }

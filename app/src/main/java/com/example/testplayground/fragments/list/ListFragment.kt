@@ -11,6 +11,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testplayground.MainActivity
 import com.example.testplayground.R
 import com.example.testplayground.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,11 @@ class ListFragment : Fragment(), ListAdapter.OnUserClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         return view
+    }
 
+    override fun onStart() {
+        super.onStart()
+        mUserViewModel.getAllUser(needFetch = false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,24 +42,18 @@ class ListFragment : Fragment(), ListAdapter.OnUserClickListener {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         subscribeObservers()
-
-
     }
 
     private fun subscribeObservers() {
         mUserViewModel.readAllData.observe(viewLifecycleOwner) {
             adapter.setNewList(it)
-
         }
-
     }
 
     override fun onUserClick(position: Int) {
         val user = adapter.userList[position]
         val userId = user.userId.toString()
-        setFragmentResult("requestKey", bundleOf("bundleKey" to userId))
-
+        (activity as MainActivity).navigateToDetailFragment(userId.toInt())
     }
-
 }
 

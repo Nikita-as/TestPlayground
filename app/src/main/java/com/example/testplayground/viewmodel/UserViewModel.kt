@@ -1,30 +1,35 @@
 package com.example.testplayground.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.testplayground.model.User
-import com.example.testplayground.repository.UserRepository
+import com.example.testplayground.useCases.Failure
+import com.example.testplayground.useCases.GetAllUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class UserViewModel @Inject constructor(private val getAllUsersUseCase: GetAllUsersUseCase) :
+    ViewModel() {
+
     val readAllData: MutableLiveData<List<User>> = MutableLiveData()
+    private val failureData: MutableLiveData<Failure> = MutableLiveData()
 
-    private fun getAllUser() {
-
-        viewModelScope.launch {
-            val users = userRepository.fetchUserData()
-            readAllData.value = users
-
+    fun getAllUser(needFetch: Boolean) {
+        getAllUsersUseCase(GetAllUsersUseCase.Params(needFetch)) {
+            it.fold(::handleFailure) { users -> handleUsers(users, !needFetch) }
         }
     }
 
-    init {
-        getAllUser()
+    private fun handleUsers(users: List<User>, fromCache: Boolean) {
+        readAllData.value = users
+        if (fromCache) getAllUser(needFetch = true)
+
     }
 
+    private fun handleFailure(failure: Failure) {
+        failureData.value = failure
+    }
 
 }

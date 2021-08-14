@@ -2,24 +2,35 @@ package com.example.testplayground.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.testplayground.model.UserPost
-import com.example.testplayground.repository.UserDetailRepository
+import com.example.testplayground.useCases.Failure
+import com.example.testplayground.useCases.GetPostsByUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserDetailViewModel @Inject constructor(
-    private val userDetailRepository: UserDetailRepository
+    private val getPostsUseCase: GetPostsByUserIdUseCase
 ) : ViewModel() {
 
     val posts: MutableLiveData<List<UserPost>> = MutableLiveData()
+    val failureData: MutableLiveData<Failure> = MutableLiveData()
 
-    fun getUserPost(userId: Int) {
-        viewModelScope.launch {
-            val posts = userDetailRepository.fetchUserDetailData(userId)
-            this@UserDetailViewModel.posts.value = posts
+    fun getPosts(userId: Int, needFetch: Boolean) {
+        getPostsUseCase(GetPostsByUserIdUseCase.Params(userId, needFetch)) {
+            it.fold(::handleFailure) { posts -> handlePosts(userId, posts, !needFetch) }
         }
+    }
+
+    private fun handlePosts(userId: Int, posts: List<UserPost>, fromCache: Boolean) {
+        val currentUserPosts = posts.filter {
+            it.userId == userId
+        }
+        this.posts.value = currentUserPosts
+        if (fromCache) getPosts(userId = userId, needFetch = true)
+    }
+
+    private fun handleFailure(failure: Failure) {
+        failureData.value = failure
     }
 }
