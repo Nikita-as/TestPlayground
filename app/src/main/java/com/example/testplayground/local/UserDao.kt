@@ -11,7 +11,7 @@ import com.example.testplayground.model.User
 interface UserDao {
 
     @Query("SELECT * FROM user_data")
-    fun getAllUsers(): LiveData<List<User>>
+    fun getAllUsers(): List<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUsers(users: User)
