@@ -55,6 +55,7 @@ class ListFragment : Fragment(), ListAdapter.OnUserClickListener {
         val userId = user.userId.toString()
         val fragment = DetailFragment()
         setFragmentResult("requestKey", bundleOf("bundleKey" to userId))
+
     }
     private fun onChange(){
 }

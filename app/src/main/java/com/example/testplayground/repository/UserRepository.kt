@@ -15,7 +15,7 @@ class UserRepository @Inject constructor(
     private val userService: UserService
 
 ) {
-    fun getAllUsers(): LiveData<UsersList> {
+    fun getAllUsers(): LiveData<List<User>> {
         return userDao.getAllUsers()
     }
 

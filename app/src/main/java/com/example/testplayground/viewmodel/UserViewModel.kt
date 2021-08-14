@@ -17,14 +17,12 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
     private fun getAllUser() {
 
         viewModelScope.launch {
-            val users = userRepository.fetchUserData()
+            val users = userRepository.getAllUsers()
             readAllData.value = users
 
         }
     }
-    fun getAllUser(): LiveData<List<RepositoryData>> {
-        return repository.getAllRecords()
-    }
+
 
     init {
         getAllUser()
