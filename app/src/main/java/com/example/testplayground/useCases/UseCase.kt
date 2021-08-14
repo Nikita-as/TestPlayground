@@ -19,7 +19,7 @@ abstract class UseCase<out Type, in Params> {
         }
     }
 
-    fun unsubscribe() {
+    private fun unsubscribe() {
         parentJob.cancelChildren()
         parentJob.cancel()
     }

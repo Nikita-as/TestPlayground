@@ -14,7 +14,7 @@ class UserDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     val posts: MutableLiveData<List<UserPost>> = MutableLiveData()
-    val failureData: MutableLiveData<Failure> = MutableLiveData()
+    private val failureData: MutableLiveData<Failure> = MutableLiveData()
 
     fun getPosts(userId: Int, needFetch: Boolean) {
         getPostsUseCase(GetPostsByUserIdUseCase.Params(userId, needFetch)) {
