@@ -19,7 +19,7 @@ class ListAdapter(val onUserClickListener: OnUserClickListener? = null) :
                 onUserClickListener?.onUserClick(adapterPosition)
             }
         }
-
+    
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserHolder {
@@ -48,8 +48,6 @@ class ListAdapter(val onUserClickListener: OnUserClickListener? = null) :
     }
 
     interface OnUserClickListener {
-
-
         fun onUserClick(position: Int)
     }
 }

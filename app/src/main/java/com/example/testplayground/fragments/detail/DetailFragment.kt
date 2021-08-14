@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,18 +16,10 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-
     private val viewModel: UserDetailViewModel by viewModels()
 
     private val adapter = PostsListAdapter()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey") { key, bundle ->
-            val userId = bundle.getString("bundleKey").toString().toInt()
-            viewModel.getUserPost(userId = userId)
 
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,10 +28,7 @@ class DetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
 
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
