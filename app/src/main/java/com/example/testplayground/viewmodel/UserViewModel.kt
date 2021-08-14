@@ -1,5 +1,6 @@
 package com.example.testplayground.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,9 +22,15 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
 
         }
     }
+    fun getAllUser(): LiveData<List<RepositoryData>> {
+        return repository.getAllRecords()
+    }
 
     init {
         getAllUser()
+    }
+    fun makeApiCall() {
+      userRepository.makeApiCall()
     }
 
 

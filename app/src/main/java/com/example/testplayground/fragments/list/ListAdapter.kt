@@ -48,6 +48,8 @@ class ListAdapter(val onUserClickListener: OnUserClickListener? = null) :
     }
 
     interface OnUserClickListener {
+
+
         fun onUserClick(position: Int)
     }
 }

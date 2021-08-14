@@ -1,6 +1,9 @@
 package com.example.testplayground.di
 
 
+import android.app.Application
+import com.example.testplayground.local.AppDatabase
+import com.example.testplayground.local.UserDao
 import com.example.testplayground.repository.UserDetailRepository
 import com.example.testplayground.repository.UserRepository
 import com.example.testplayground.service.UserDetailService
@@ -35,11 +38,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideUserRepository(
-        userService: UserService,
+        userService: UserService
     ): UserRepository {
         return UserRepository(
             userService = userService
-
         )
     }
 
@@ -58,5 +60,18 @@ object AppModule {
         return UserDetailRepository(
             userDetailService = userDetailService
         )
+    }
+
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Application): AppDatabase {
+        return AppDatabase.getDatabase(context)
+
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(appDatabase: AppDatabase): UserDao {
+        return appDatabase.userDao()
     }
 }

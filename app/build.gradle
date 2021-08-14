@@ -78,7 +78,12 @@ dependencies {
     def coroutines_android_version = '1.5.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_android_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
+    implementation 'androidx.fragment:fragment-ktx:1.4.0-alpha06'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
 }
 kapt {
