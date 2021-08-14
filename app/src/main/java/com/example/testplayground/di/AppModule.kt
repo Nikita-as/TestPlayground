@@ -41,6 +41,7 @@ object AppModule {
         userService: UserService
     ): UserRepository {
         return UserRepository(
+
             userService = userService
         )
     }

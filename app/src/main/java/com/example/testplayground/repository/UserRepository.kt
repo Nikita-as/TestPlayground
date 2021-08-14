@@ -25,11 +25,11 @@ class UserRepository @Inject constructor(
 
     fun makeApiCall() {
 
-        val call: Call<UsersList> = userService.getUser()
-        call?.enqueue(object : Callback<UsersList> {
+        val call: Call<List<User>> = userService.getUser()
+        call?.enqueue(object : Callback<List<User>> {
             override fun onResponse(
-                call: Call<UsersList>,
-                response: Response<UsersList>
+                call: Call<List<User>>,
+                response: Response<List<User>>
             ) {
                 if(response.isSuccessful) {
                     userDao.deleteAllUsers()
@@ -39,7 +39,7 @@ class UserRepository @Inject constructor(
                 }
             }
 
-            override fun onFailure(call: Call<UsersList>, t: Throwable) {
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 //
             }
         })
