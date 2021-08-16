@@ -1,6 +1,5 @@
 package com.example.testplayground.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.testplayground.model.User
@@ -12,6 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(private val getAllUsersUseCase: GetAllUsersUseCase) :
     ViewModel() {
+
 
     val readAllData: MutableLiveData<List<User>> = MutableLiveData()
     private val failureData: MutableLiveData<Failure> = MutableLiveData()
@@ -26,10 +26,13 @@ class UserViewModel @Inject constructor(private val getAllUsersUseCase: GetAllUs
         readAllData.value = users
         if (fromCache) getAllUser(needFetch = true)
 
+
     }
 
     private fun handleFailure(failure: Failure) {
         failureData.value = failure
+
+
     }
 
 }
