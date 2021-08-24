@@ -1,10 +1,7 @@
 package com.example.testplayground
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import com.example.testplayground.fragments.detail.DetailFragment
 import com.example.testplayground.fragments.list.ListFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,15 +32,16 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(R.id.main_containerAdd, ListFragment())
                 .commit()
-        }
-
-        if (supportFragmentManager.fragments.last().tag == "ListFragment") {
+        } else {
             super.onBackPressed()
+
         }
     }
-    fun Fragment.makeToast(text: String, duration: Int = Toast.LENGTH_LONG) {
-        activity?.let {
-            Toast.makeText(it, text, duration).show()
-        }
-    }
+    /* fun Fragment.makeToast(text: String, duration: Int = Toast.LENGTH_LONG) {
+         activity?.let {
+             Toast.makeText(it, text, duration).show()
+         }
+     }*/
+
+
 }
